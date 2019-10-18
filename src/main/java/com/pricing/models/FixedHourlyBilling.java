@@ -1,16 +1,17 @@
 package com.pricing.models;
 
+import org.springframework.beans.factory.annotation.Value;
+
 public class FixedHourlyBilling implements PricingPolicy {
 
-	private Double rate;
+	private Long fixedCharge;
 
-	private int parkingHours;
-
-	private Double fixedCharge;
+	@Value(value = "${hourlyBillingRate}")
+	private Long rate;
 
 	@Override
-	public Double generateBill() {
-		return fixedCharge + (parkingHours * rate);
+	public Long generateBill(Long duration) {
+		return fixedCharge + (rate * duration);
 	}
 
 }

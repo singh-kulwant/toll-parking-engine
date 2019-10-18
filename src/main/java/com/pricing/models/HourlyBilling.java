@@ -2,13 +2,11 @@ package com.pricing.models;
 
 public class HourlyBilling implements PricingPolicy {
 
-	private Double rate;
-
-	private int parkingHours;
+	public static Long rate;
 
 	@Override
-	public Double generateBill() {
-		return rate * parkingHours;
+	public Long generateBill(Long duration) {
+		return rate * duration;
 	}
 
 }

@@ -1,0 +1,7 @@
+server:
+  port: 9090
+
+parking:
+  capacity: 1
+
+hourlyBillingRate: 12

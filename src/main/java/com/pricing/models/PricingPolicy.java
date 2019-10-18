@@ -2,5 +2,5 @@ package com.pricing.models;
 
 public interface PricingPolicy {
 
-	public Double generateBill();
+	public Long generateBill(Long duration);
 }
