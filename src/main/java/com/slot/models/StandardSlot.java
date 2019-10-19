@@ -1,22 +1,12 @@
 package com.slot.models;
 
-import java.io.Serializable;
-import java.time.LocalDateTime;
 import java.util.HashMap;
 
 import com.pricing.models.PricingPolicy;
-import com.pricing.models.Ticket;
 import com.vehicle.models.Vehicle;
 import com.vehicle.models.VehicleType;
 
-public class StandardSlot implements ParkingSlot, Serializable {
-
-	private int freeSlots;
-	private int occupiedSlots;
-	private final int slotCapacity;
-
-	private PricingPolicy pricingPolicy;
-	private HashMap<Vehicle, Integer> parkedVehicles;
+public class StandardSlot extends ParkingSlot {
 
 	private static StandardSlot standardParkingSlot;
 
@@ -45,33 +35,6 @@ public class StandardSlot implements ParkingSlot, Serializable {
 			}
 
 		}
-	}
-
-	@Override
-	public Ticket unparkVehicle(Vehicle vehicle) {
-		if (parkedVehicles.containsKey(vehicle)) {
-			parkedVehicles.remove(vehicle);
-			freeSlots++;
-			occupiedSlots--;
-
-			Ticket ticket = vehicle.getTicket();
-			ticket.setExitTime(LocalDateTime.now());
-
-			int hours = ticket.getExitTime().getHour() - ticket.getEntryTime().getHour();
-			int mins = (ticket.getExitTime().getMinute() - ticket.getEntryTime().getMinute());
-			long duration = hours + (mins / 60);
-			ticket.setDuration(duration);
-
-			ticket.setTotalAmount(this.pricingPolicy.generateBill(ticket.getDuration()));
-
-			return ticket;
-		}
-		return null;
-	}
-
-	@Override
-	public HashMap<Vehicle, Integer> parkedVehicles() {
-		return parkedVehicles;
 	}
 
 	public static ParkingSlot getInstance() {

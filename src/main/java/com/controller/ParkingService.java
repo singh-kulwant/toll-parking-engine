@@ -1,12 +1,11 @@
 package com.controller;
 
-import java.util.ArrayList;
-import java.util.List;
+import java.util.HashMap;
 import java.util.Optional;
 
 import org.springframework.stereotype.Service;
 
-import com.pricing.models.Ticket;
+import com.pricing.models.ParkingTicket;
 import com.slot.models.HeavyElectricSlot;
 import com.slot.models.LightElectricSlot;
 import com.slot.models.ParkingSlot;
@@ -27,11 +26,17 @@ public class ParkingService {
 		if (vehicle.getType().equals(VehicleType.GASOLINE)) {
 			return StandardSlot.getInstance();
 		}
+		if (vehicle.getType().equals(VehicleType.LIGHT_ELECTRIC)) {
+			return LightElectricSlot.getInstance();
+		}
+		if (vehicle.getType().equals(VehicleType.HEAVY_ELECTRIC)) {
+			return HeavyElectricSlot.getInstance();
+		}
 		return null;
 
 	}
 
-	public Ticket unparkVehicle(String licence) {
+	public ParkingTicket unparkVehicle(String licence) {
 
 		Optional<Vehicle> vehicle = Optional.empty();
 
@@ -57,13 +62,24 @@ public class ParkingService {
 
 	}
 
-	public List<ParkingSlot> parkingStatus() {
+	public HashMap<String, HashMap<String, Integer>> parkingStatus() {
 
-		List<ParkingSlot> list = new ArrayList<ParkingSlot>();
-		list.add(StandardSlot.getInstance());
-		list.add(LightElectricSlot.getInstance());
-		list.add(HeavyElectricSlot.getInstance());
-		return list;
+		HashMap<String, HashMap<String, Integer>> parkingSlots = new HashMap<String, HashMap<String, Integer>>();
+
+		parkingSlots.put("Standard Parking Slot", getSlotStatus(StandardSlot.getInstance()));
+		parkingSlots.put("20KW Electric Parking Slot", getSlotStatus(LightElectricSlot.getInstance()));
+		parkingSlots.put("50KW Electric Parking Slot", getSlotStatus(HeavyElectricSlot.getInstance()));
+		return parkingSlots;
+	}
+
+	public HashMap<String, Integer> getSlotStatus(ParkingSlot parkingSlot) {
+
+		HashMap<String, Integer> slot = new HashMap<String, Integer>();
+		slot.put("Free Slots", parkingSlot.getFreeSlots());
+		slot.put("Occupied Slots", parkingSlot.getOccupiedSlots());
+		slot.put("Slot Capacity", parkingSlot.getSlotCapacity());
+
+		return slot;
 	}
 
 }

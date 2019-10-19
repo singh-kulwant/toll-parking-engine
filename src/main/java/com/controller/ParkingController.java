@@ -1,6 +1,6 @@
 package com.controller;
 
-import java.util.List;
+import java.util.HashMap;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -10,33 +10,32 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.bind.annotation.RestController;
 
-import com.pricing.models.Ticket;
-import com.slot.models.ParkingSlot;
+import com.pricing.models.ParkingTicket;
 import com.vehicle.models.Vehicle;
 
 @RestController
-@RequestMapping("/toll")
+@RequestMapping("/parking")
 public class ParkingController {
 
 	@Autowired
 	private ParkingService parkingService;
 
-	@RequestMapping(value = "/park/vehicle", method = RequestMethod.POST)
+	@RequestMapping(value = "/vehicle", method = RequestMethod.POST)
 	@ResponseBody
 	public String parkVehicle(@RequestBody Vehicle vehicle) {
 		return parkingService.parkVehicle(vehicle);
 	}
 
-	@RequestMapping(value = "/unpark/vehicle/{licence}", method = RequestMethod.GET)
+	@RequestMapping(value = "/vehicle/{vehicleRegistration}", method = RequestMethod.DELETE)
 	@ResponseBody
-	public Ticket unparkVehicle(@PathVariable String licence) {
-		return parkingService.unparkVehicle(licence);
+	public ParkingTicket unparkVehicle(@PathVariable String vehicleRegistration) {
+		return parkingService.unparkVehicle(vehicleRegistration);
 	}
 
-	@RequestMapping(value = "/park/status", method = RequestMethod.GET)
+	@RequestMapping(value = "/status", method = RequestMethod.GET)
 	@ResponseBody
-	public List<ParkingSlot> parkingStatus() {
+	public HashMap<String, HashMap<String, Integer>> parkingStatus() {
 		return parkingService.parkingStatus();
 	}
-	
+
 }

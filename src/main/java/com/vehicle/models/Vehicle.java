@@ -1,15 +1,15 @@
 package com.vehicle.models;
 
-import com.pricing.models.Ticket;
+import com.pricing.models.ParkingTicket;
 
 public class Vehicle {
 
 	private String licence;
 	private VehicleType type;
-	private Ticket ticket;
+	private ParkingTicket ticket;
 
 	public void setTicket() {
-		this.ticket = new Ticket(this.licence);
+		this.ticket = new ParkingTicket(this.licence);
 	}
 
 	public Vehicle() {
@@ -28,7 +28,7 @@ public class Vehicle {
 		return type;
 	}
 
-	public Ticket getTicket() {
+	public ParkingTicket getTicket() {
 		return ticket;
 	}
 
