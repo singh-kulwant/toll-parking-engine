@@ -1,4 +1,4 @@
-package com.parking.api;
+package com.parking.service;
 
 import java.util.HashMap;
 import java.util.Optional;

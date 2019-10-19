@@ -1,4 +1,4 @@
-package com.parking.api;
+package com.parking.config;
 
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.boot.context.properties.ConfigurationProperties;

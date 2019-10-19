@@ -1,4 +1,4 @@
-package com.parking.api;
+package com.parking.rest;
 
 import java.util.HashMap;
 
@@ -14,6 +14,9 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.bind.annotation.RestController;
 
+import com.parking.config.ApiExceptionHandler;
+import com.parking.service.ParkingService;
+import com.parking.service.ParkingValidator;
 import com.pricing.models.ParkingTicket;
 import com.slot.models.ParkingSlot;
 import com.vehicle.models.Vehicle;

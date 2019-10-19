@@ -1,4 +1,4 @@
-package com.parking.api;
+package com.parking.config;
 
 import org.springframework.core.Ordered;
 import org.springframework.core.annotation.Order;

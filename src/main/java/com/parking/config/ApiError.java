@@ -1,4 +1,4 @@
-package com.parking.api;
+package com.parking.config;
 
 import java.time.LocalDateTime;
 
