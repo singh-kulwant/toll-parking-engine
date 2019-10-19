@@ -8,6 +8,12 @@ import com.fasterxml.jackson.annotation.JsonFormat;
 
 import lombok.Data;
 
+/**
+ * Parking ticket given to customer for payment
+ * 
+ * @author root
+ *
+ */
 @Data
 public class ParkingTicket {
 

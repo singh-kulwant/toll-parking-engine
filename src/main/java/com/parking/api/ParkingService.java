@@ -13,6 +13,12 @@ import com.slot.models.StandardSlot;
 import com.vehicle.models.Vehicle;
 import com.vehicle.models.VehicleType;
 
+/**
+ * Parking service performs operations on parking slots
+ * 
+ * @author root
+ *
+ */
 @Service
 public class ParkingService {
 

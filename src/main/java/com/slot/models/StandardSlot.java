@@ -6,10 +6,16 @@ import com.pricing.models.PricingPolicy;
 import com.vehicle.models.Vehicle;
 import com.vehicle.models.VehicleType;
 
+/**
+ * Parking slot class for standard gasoline cars
+ * 
+ * @author root
+ *
+ */
 public class StandardSlot extends ParkingSlot {
 
 	private static StandardSlot standardParkingSlot;
-	
+
 	private StandardSlot(int capacity, PricingPolicy pricingPolicy) {
 		this.pricingPolicy = pricingPolicy;
 		this.freeSlots = capacity;

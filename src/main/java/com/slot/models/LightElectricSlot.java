@@ -6,6 +6,12 @@ import com.pricing.models.PricingPolicy;
 import com.vehicle.models.Vehicle;
 import com.vehicle.models.VehicleType;
 
+/**
+ * Parking slot class for 20KW electric cars
+ * 
+ * @author root
+ *
+ */
 public class LightElectricSlot extends ParkingSlot {
 
 	private static LightElectricSlot lightElectricParkingSlot;

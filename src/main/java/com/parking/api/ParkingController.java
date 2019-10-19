@@ -18,6 +18,13 @@ import com.pricing.models.ParkingTicket;
 import com.slot.models.ParkingSlot;
 import com.vehicle.models.Vehicle;
 
+/**
+ * 
+ * Main parking controller class
+ * 
+ * @author root
+ *
+ */
 @RestController
 @RequestMapping("/parking")
 public class ParkingController {
@@ -37,6 +44,13 @@ public class ParkingController {
 	@Autowired
 	private ApiExceptionHandler exceptionHandler;
 
+	/**
+	 * 
+	 * Parks vehicle and update free and reserved parking slots
+	 * 
+	 * @param vehicle
+	 * @return
+	 */
 	@PostMapping(value = "/vehicle")
 	@ResponseBody
 	public ResponseEntity<Object> parkVehicle(@RequestBody Vehicle vehicle) {
@@ -59,12 +73,26 @@ public class ParkingController {
 
 	}
 
+	/**
+	 * 
+	 * Unpark vehicle from parking and generate parking ticket
+	 * 
+	 * @param vehicleRegistration
+	 * @return
+	 */
 	@RequestMapping(value = "/vehicle/{vehicleRegistration}", method = RequestMethod.DELETE)
 	@ResponseBody
 	public ParkingTicket unparkVehicle(@PathVariable String vehicleRegistration) {
 		return parkingService.unparkVehicle(vehicleRegistration);
 	}
 
+	/**
+	 * 
+	 * Shows current status of all Parking Slots like free slots, occupied slots and
+	 * slot capacity
+	 * 
+	 * @return
+	 */
 	@RequestMapping(value = "/status", method = RequestMethod.GET)
 	@ResponseBody
 	public HashMap<String, HashMap<String, Integer>> parkingStatus() {

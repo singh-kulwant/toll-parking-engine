@@ -12,6 +12,14 @@ import com.slot.models.HeavyElectricSlot;
 import com.slot.models.LightElectricSlot;
 import com.slot.models.StandardSlot;
 
+/**
+ * This class loads configuration properties related to toll parking such as
+ * Parking Slot Capacity, various Fixed and Hourly Billing Rates and initializes
+ * Parking Slot Instances
+ *
+ * @author root
+ *
+ */
 @Configuration
 @PropertySource("classpath:application.yml")
 @ConfigurationProperties(prefix = "parking")

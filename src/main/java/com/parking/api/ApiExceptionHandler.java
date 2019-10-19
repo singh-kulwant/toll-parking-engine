@@ -21,10 +21,23 @@ public class ApiExceptionHandler extends ResponseEntityExceptionHandler {
 		return buildResponseEntity(new ApiError(HttpStatus.BAD_REQUEST, error, ex));
 	}
 
+	/**
+	 * create response entity object with ApiError
+	 * 
+	 * @param apiError
+	 * @return
+	 */
 	public ResponseEntity<Object> buildResponseEntity(ApiError apiError) {
 		return new ResponseEntity<>(apiError, apiError.getStatus());
 	}
 
+	/**
+	 * Generate error response entity object using status and message
+	 * 
+	 * @param status
+	 * @param message
+	 * @return
+	 */
 	public ResponseEntity<Object> buildErrorResponseEntity(HttpStatus status, String message) {
 		return buildResponseEntity(new ApiError(status, message));
 	}

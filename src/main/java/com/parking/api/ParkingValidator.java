@@ -10,6 +10,13 @@ import com.slot.models.LightElectricSlot;
 import com.slot.models.StandardSlot;
 import com.vehicle.models.Vehicle;
 
+/**
+ * 
+ * Performs validations on API input request
+ * 
+ * @author root
+ *
+ */
 @Component
 public class ParkingValidator {
 

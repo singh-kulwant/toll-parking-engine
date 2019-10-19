@@ -4,6 +4,12 @@ import com.pricing.models.ParkingTicket;
 
 import lombok.Data;
 
+/**
+ * Vehicle details stored in parking slots
+ * 
+ * @author root
+ *
+ */
 @Data
 public class Vehicle {
 
