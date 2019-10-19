@@ -7,7 +7,7 @@ import org.springframework.context.annotation.ComponentScan;
 
 @SpringBootApplication
 @ComponentScan({ "com.controller", "com.slot.models" })
-@EnableConfigurationProperties(ConstantProperties.class)
+@EnableConfigurationProperties(ConfigurationLoader.class)
 public class TollParkingApplication {
 
 	public static void main(String[] args) {

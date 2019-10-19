@@ -1,12 +1,24 @@
 package com.pricing.models;
 
+import java.time.LocalDateTime;
+
 public class Ticket {
 
-	public long getEntryTime() {
+	private LocalDateTime entryTime;
+
+	private LocalDateTime exitTime;
+
+	private long duration;
+
+	private long totalAmount;
+
+	private String licence;
+
+	public LocalDateTime getEntryTime() {
 		return entryTime;
 	}
 
-	public long getExitTime() {
+	public LocalDateTime getExitTime() {
 		return exitTime;
 	}
 
@@ -22,13 +34,11 @@ public class Ticket {
 		return licence;
 	}
 
-	private long entryTime;
-
-	public void setEntryTime(long entryTime) {
+	public void setEntryTime(LocalDateTime entryTime) {
 		this.entryTime = entryTime;
 	}
 
-	public void setExitTime(long exitTime) {
+	public void setExitTime(LocalDateTime exitTime) {
 		this.exitTime = exitTime;
 	}
 
@@ -44,21 +54,13 @@ public class Ticket {
 		this.licence = licence;
 	}
 
-	private long exitTime;
-
-	private long duration;
-
-	private long totalAmount;
-
-	private String licence;
-
 	public Ticket(String licence) {
-		this.entryTime = System.currentTimeMillis();
+		this.entryTime = LocalDateTime.now();
 		this.licence = licence;
 	}
-	
+
 	Ticket() {
-		
+
 	}
 
 }

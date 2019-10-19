@@ -1,13 +1,10 @@
 package com.pricing.models;
 
-import org.springframework.beans.factory.annotation.Value;
-
 public class FixedHourlyBilling implements PricingPolicy {
 
-	private Long fixedCharge;
+	public static Long fixedCharge;
 
-	@Value(value = "${hourlyBillingRate}")
-	private Long rate;
+	public static Long rate;
 
 	@Override
 	public Long generateBill(Long duration) {

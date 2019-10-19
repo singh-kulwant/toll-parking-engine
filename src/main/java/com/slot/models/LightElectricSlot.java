@@ -1,55 +1,88 @@
 package com.slot.models;
 
+import java.io.Serializable;
+import java.time.LocalDateTime;
 import java.util.HashMap;
 
-import org.springframework.beans.factory.annotation.Value;
-
-import com.pricing.models.FixedHourlyBilling;
 import com.pricing.models.PricingPolicy;
 import com.pricing.models.Ticket;
 import com.vehicle.models.Vehicle;
+import com.vehicle.models.VehicleType;
 
-public class LightElectricSlot implements ParkingSlot {
+public class LightElectricSlot implements ParkingSlot, Serializable {
 
-	private LightElectricSlot(int capacity) {
-		this.pricingPolicy = new FixedHourlyBilling();
-		this.capacity = capacity;
-		this.freeSlot = capacity;
+	private int freeSlots;
+	private int occupiedSlots;
+	private final int slotCapacity;
+
+	private PricingPolicy pricingPolicy;
+	private HashMap<Vehicle, Integer> parkedVehicles;
+
+	private static LightElectricSlot lightElectricParkingSlot;
+
+	private LightElectricSlot(int capacity, PricingPolicy pricingPolicy) {
+		this.pricingPolicy = pricingPolicy;
+		this.freeSlots = capacity;
+		this.slotCapacity = capacity;
 		this.occupiedSlots = 0;
 		this.parkedVehicles = new HashMap<Vehicle, Integer>(capacity);
 	}
 
-	private static LightElectricSlot midElectricSlot;
-
-	@Value(value = "${midElectricParkingCapacity:2}")
-	private static int capacity;
-	private int freeSlot;
-	private int occupiedSlots;
-	private HashMap<Vehicle, Integer> parkedVehicles;
-	private PricingPolicy pricingPolicy;
-
 	@Override
 	public String parkVehicle(Vehicle vehicle) {
-		// TODO Auto-generated method stub
-		return null;
+		if (freeSlots != 0 && vehicle.getType().equals(VehicleType.LIGHT_ELECTRIC)) {
+			vehicle.setTicket();
+			parkedVehicles.put(vehicle, freeSlots);
+			freeSlots--;
+			occupiedSlots++;
+
+			return "Vehicle parked at 20KW Electric Parking Slot: " + parkedVehicles.get(vehicle);
+		} else {
+			if (vehicle.getType().equals(VehicleType.LIGHT_ELECTRIC)) {
+				return "Sorry! 20KW Electric Parking slots are full";
+			} else {
+				return "Wrong parking slot for vehicle.";
+			}
+
+		}
 	}
 
 	@Override
 	public Ticket unparkVehicle(Vehicle vehicle) {
-		// TODO Auto-generated method stub
+		if (parkedVehicles.containsKey(vehicle)) {
+			parkedVehicles.remove(vehicle);
+			freeSlots++;
+			occupiedSlots--;
+
+			Ticket ticket = vehicle.getTicket();
+			ticket.setExitTime(LocalDateTime.now());
+
+			int hours = ticket.getExitTime().getHour() - ticket.getEntryTime().getHour();
+			int mins = (ticket.getExitTime().getMinute() - ticket.getEntryTime().getMinute());
+			long duration = hours + (mins / 60);
+			ticket.setDuration(duration);
+
+			ticket.setTotalAmount(this.pricingPolicy.generateBill(ticket.getDuration()));
+
+			return ticket;
+		}
 		return null;
 	}
 
-	public static ParkingSlot getSlotInstance() {
-		if (midElectricSlot == null) {
-			midElectricSlot = new LightElectricSlot(capacity);
-		}
-		return midElectricSlot;
-	}
-	
 	@Override
 	public HashMap<Vehicle, Integer> parkedVehicles() {
 		return parkedVehicles;
+	}
+
+	public static ParkingSlot getInstance() {
+		return lightElectricParkingSlot;
+	}
+
+	public static ParkingSlot initLightElectricSlotInstance(int capacity, PricingPolicy pricingPolicy) {
+		if (lightElectricParkingSlot == null) {
+			lightElectricParkingSlot = new LightElectricSlot(capacity, pricingPolicy);
+		}
+		return lightElectricParkingSlot;
 	}
 
 }

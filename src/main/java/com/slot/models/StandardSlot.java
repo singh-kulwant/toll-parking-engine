@@ -1,46 +1,45 @@
 package com.slot.models;
 
+import java.io.Serializable;
+import java.time.LocalDateTime;
 import java.util.HashMap;
 
-import com.pricing.models.HourlyBilling;
 import com.pricing.models.PricingPolicy;
 import com.pricing.models.Ticket;
 import com.vehicle.models.Vehicle;
 import com.vehicle.models.VehicleType;
 
-public class StandardSlot implements ParkingSlot {
+public class StandardSlot implements ParkingSlot, Serializable {
 
-	public static int standardParkingCapacity;
-	
-	private final int capacity;
-	private int freeSlot;
+	private int freeSlots;
 	private int occupiedSlots;
-	private HashMap<Vehicle, Integer> parkedVehicles;
+	private final int slotCapacity;
 
 	private PricingPolicy pricingPolicy;
+	private HashMap<Vehicle, Integer> parkedVehicles;
 
 	private static StandardSlot standardParkingSlot;
 
-	private StandardSlot(int capacity) {
-		this.pricingPolicy = new HourlyBilling();
-		this.freeSlot = capacity;
-		this.capacity = capacity;
+	private StandardSlot(int capacity, PricingPolicy pricingPolicy) {
+		this.pricingPolicy = pricingPolicy;
+		this.freeSlots = capacity;
+		this.slotCapacity = capacity;
 		this.occupiedSlots = 0;
 		this.parkedVehicles = new HashMap<Vehicle, Integer>(capacity);
 	}
 
 	@Override
 	public String parkVehicle(Vehicle vehicle) {
-		if (freeSlot != 0 && vehicle.getType().equals(VehicleType.GASOLINE)) {
+		if (freeSlots != 0 && vehicle.getType().equals(VehicleType.GASOLINE)) {
 			vehicle.setTicket();
-			parkedVehicles.put(vehicle, freeSlot);
-			freeSlot--;
+			parkedVehicles.put(vehicle, freeSlots);
+			freeSlots--;
 			occupiedSlots++;
 
-			return "Vehicle parked at slot: " + parkedVehicles.get(vehicle);
+			return "Vehicle parked at Standard Parking Slot: " + parkedVehicles.get(vehicle);
 		} else {
 			if (vehicle.getType().equals(VehicleType.GASOLINE)) {
-				return "Sorry! Parking slots are full.";
+				return "Sorry! Standard Parking Slots are full";
 			} else {
 				return "Wrong parking slot for vehicle.";
 			}
@@ -52,11 +51,17 @@ public class StandardSlot implements ParkingSlot {
 	public Ticket unparkVehicle(Vehicle vehicle) {
 		if (parkedVehicles.containsKey(vehicle)) {
 			parkedVehicles.remove(vehicle);
-			freeSlot++;
+			freeSlots++;
 			occupiedSlots--;
 
 			Ticket ticket = vehicle.getTicket();
-			ticket.setDuration(System.currentTimeMillis() - ticket.getEntryTime());
+			ticket.setExitTime(LocalDateTime.now());
+
+			int hours = ticket.getExitTime().getHour() - ticket.getEntryTime().getHour();
+			int mins = (ticket.getExitTime().getMinute() - ticket.getEntryTime().getMinute());
+			long duration = hours + (mins / 60);
+			ticket.setDuration(duration);
+
 			ticket.setTotalAmount(this.pricingPolicy.generateBill(ticket.getDuration()));
 
 			return ticket;
@@ -64,16 +69,20 @@ public class StandardSlot implements ParkingSlot {
 		return null;
 	}
 
-	public static ParkingSlot getSlotInstance() {
-		if (standardParkingSlot == null) {
-			standardParkingSlot = new StandardSlot(standardParkingCapacity);
-		}
-		return standardParkingSlot;
-	}
-
 	@Override
 	public HashMap<Vehicle, Integer> parkedVehicles() {
 		return parkedVehicles;
+	}
+
+	public static ParkingSlot getInstance() {
+		return standardParkingSlot;
+	}
+
+	public static ParkingSlot initStandardSlotInstance(int capacity, PricingPolicy pricingPolicy) {
+		if (standardParkingSlot == null) {
+			standardParkingSlot = new StandardSlot(capacity, pricingPolicy);
+		}
+		return standardParkingSlot;
 	}
 
 }
