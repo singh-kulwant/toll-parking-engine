@@ -1,4 +1,4 @@
-package com.controller;
+package com.parking.api;
 
 import java.util.HashMap;
 import java.util.Optional;
@@ -16,20 +16,15 @@ import com.vehicle.models.VehicleType;
 @Service
 public class ParkingService {
 
-	public String parkVehicle(Vehicle vehicle) {
-		ParkingSlot parkingSlot = getSlotType(vehicle);
-		return parkingSlot.parkVehicle(vehicle);
-	}
-
 	public ParkingSlot getSlotType(Vehicle vehicle) {
 
-		if (vehicle.getType().equals(VehicleType.GASOLINE)) {
+		if (vehicle.getVehicleType().equals(VehicleType.GASOLINE)) {
 			return StandardSlot.getInstance();
 		}
-		if (vehicle.getType().equals(VehicleType.LIGHT_ELECTRIC)) {
+		if (vehicle.getVehicleType().equals(VehicleType.LIGHT_ELECTRIC)) {
 			return LightElectricSlot.getInstance();
 		}
-		if (vehicle.getType().equals(VehicleType.HEAVY_ELECTRIC)) {
+		if (vehicle.getVehicleType().equals(VehicleType.HEAVY_ELECTRIC)) {
 			return HeavyElectricSlot.getInstance();
 		}
 		return null;
@@ -41,19 +36,19 @@ public class ParkingService {
 		Optional<Vehicle> vehicle = Optional.empty();
 
 		vehicle = StandardSlot.getInstance().parkedVehicles().keySet().stream()
-				.filter(v -> licence.equalsIgnoreCase(v.getLicence())).findAny();
+				.filter(v -> licence.equalsIgnoreCase(v.getVehicleRegistration())).findAny();
 
 		if (vehicle.isPresent())
 			return StandardSlot.getInstance().unparkVehicle(vehicle.get());
 
 		vehicle = LightElectricSlot.getInstance().parkedVehicles().keySet().stream()
-				.filter(v -> licence.equalsIgnoreCase(v.getLicence())).findAny();
+				.filter(v -> licence.equalsIgnoreCase(v.getVehicleRegistration())).findAny();
 
 		if (vehicle.isPresent())
 			return LightElectricSlot.getInstance().unparkVehicle(vehicle.get());
 
 		vehicle = HeavyElectricSlot.getInstance().parkedVehicles().keySet().stream()
-				.filter(v -> licence.equalsIgnoreCase(v.getLicence())).findAny();
+				.filter(v -> licence.equalsIgnoreCase(v.getVehicleRegistration())).findAny();
 
 		if (vehicle.isPresent())
 			return HeavyElectricSlot.getInstance().unparkVehicle(vehicle.get());

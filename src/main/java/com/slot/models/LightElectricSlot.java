@@ -15,26 +15,8 @@ public class LightElectricSlot extends ParkingSlot {
 		this.freeSlots = capacity;
 		this.slotCapacity = capacity;
 		this.occupiedSlots = 0;
+		this.vehicleType = VehicleType.LIGHT_ELECTRIC;
 		this.parkedVehicles = new HashMap<Vehicle, Integer>(capacity);
-	}
-
-	@Override
-	public String parkVehicle(Vehicle vehicle) {
-		if (freeSlots != 0 && vehicle.getType().equals(VehicleType.LIGHT_ELECTRIC)) {
-			vehicle.setTicket();
-			parkedVehicles.put(vehicle, freeSlots);
-			freeSlots--;
-			occupiedSlots++;
-
-			return "Vehicle parked at 20KW Electric Parking Slot: " + parkedVehicles.get(vehicle);
-		} else {
-			if (vehicle.getType().equals(VehicleType.LIGHT_ELECTRIC)) {
-				return "Sorry! 20KW Electric Parking slots are full";
-			} else {
-				return "Wrong parking slot for vehicle.";
-			}
-
-		}
 	}
 
 	public static ParkingSlot getInstance() {

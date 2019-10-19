@@ -3,20 +3,40 @@ package com.slot.models;
 import java.time.LocalDateTime;
 import java.util.HashMap;
 
-import com.pricing.models.PricingPolicy;
 import com.pricing.models.ParkingTicket;
+import com.pricing.models.PricingPolicy;
 import com.vehicle.models.Vehicle;
+import com.vehicle.models.VehicleType;
 
 public abstract class ParkingSlot {
 
 	protected int freeSlots;
 	protected int occupiedSlots;
 	protected int slotCapacity;
+	protected VehicleType vehicleType;
 
 	protected PricingPolicy pricingPolicy;
 	protected HashMap<Vehicle, Integer> parkedVehicles;
 
-	public abstract String parkVehicle(Vehicle vehicle);
+	public String parkVehicle(Vehicle vehicle) {
+
+		if (freeSlots != 0 && vehicle.getVehicleType().equals(this.vehicleType)) {
+			vehicle.setTicket();
+			parkedVehicles.put(vehicle, freeSlots);
+			freeSlots--;
+			occupiedSlots++;
+
+			return "Vehicle parked at " + this.vehicleType + " Parking Slot: " + parkedVehicles.get(vehicle);
+		} else {
+			if (vehicle.getVehicleType().equals(this.vehicleType)) {
+				return "Sorry! " + this.vehicleType + " Parking Slots are full";
+			} else {
+				return "Wrong parking slot for vehicle.";
+			}
+
+		}
+
+	}
 
 	public ParkingTicket unparkVehicle(Vehicle vehicle) {
 
@@ -25,7 +45,7 @@ public abstract class ParkingSlot {
 			freeSlots++;
 			occupiedSlots--;
 
-			ParkingTicket ticket = vehicle.getTicket();
+			ParkingTicket ticket = vehicle.getParkingTicket();
 			ticket.setExitTime(LocalDateTime.now());
 
 			int hours = ticket.getExitTime().getHour() - ticket.getEntryTime().getHour();

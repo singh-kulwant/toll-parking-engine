@@ -1,4 +1,4 @@
-package com.app;
+package com.parking.api;
 
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.boot.context.properties.ConfigurationProperties;
@@ -15,7 +15,7 @@ import com.slot.models.StandardSlot;
 @Configuration
 @PropertySource("classpath:application.yml")
 @ConfigurationProperties(prefix = "parking")
-public class ConfigurationLoader {
+public class ParkingConfigurationLoader {
 
 	@Value(value = "${standardCapacity}")
 	public int standardCapacity;
