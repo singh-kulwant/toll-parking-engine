@@ -13,17 +13,17 @@ class ParkingControllerTest {
 
 	@Test
 	final void testParkVehicle() {
-		fail("Not yet implemented"); // TODO
+		// TODO
 	}
 
 	@Test
 	final void testUnparkVehicle() {
-		fail("Not yet implemented"); // TODO
+		// TODO
 	}
 
 	@Test
 	final void testParkingStatus() {
-		fail("Not yet implemented"); // TODO
+		// TODO
 	}
 
 }

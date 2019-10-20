@@ -2,15 +2,12 @@ package com.vehicle.models;
 
 import com.pricing.models.ParkingTicket;
 
-import lombok.Data;
-
 /**
  * Vehicle details stored in parking slots
  * 
  * @author root
  *
  */
-@Data
 public class Vehicle {
 
 	private VehicleType vehicleType;
@@ -21,6 +18,48 @@ public class Vehicle {
 
 	public void setParkingTicket() {
 		this.parkingTicket = new ParkingTicket(this.vehicleRegistration);
+	}
+
+	/**
+	 * @return the vehicleType
+	 */
+	public VehicleType getVehicleType() {
+		return vehicleType;
+	}
+
+	/**
+	 * @return the vehicleRegistration
+	 */
+	public String getVehicleRegistration() {
+		return vehicleRegistration;
+	}
+
+	/**
+	 * @return the parkingTicket
+	 */
+	public ParkingTicket getParkingTicket() {
+		return parkingTicket;
+	}
+
+	/**
+	 * @param vehicleType the vehicleType to set
+	 */
+	public void setVehicleType(VehicleType vehicleType) {
+		this.vehicleType = vehicleType;
+	}
+
+	/**
+	 * @param vehicleRegistration the vehicleRegistration to set
+	 */
+	public void setVehicleRegistration(String vehicleRegistration) {
+		this.vehicleRegistration = vehicleRegistration;
+	}
+
+	/**
+	 * @param parkingTicket the parkingTicket to set
+	 */
+	public void setParkingTicket(ParkingTicket parkingTicket) {
+		this.parkingTicket = parkingTicket;
 	}
 
 }

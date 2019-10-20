@@ -1,0 +1,9 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<testsuite name="com.controller.ParkingControllerTest" tests="3" skipped="0" failures="0" errors="0" timestamp="2019-10-20T20:15:54" hostname="panzer" time="0.032">
+  <properties/>
+  <testcase name="testUnparkVehicle()" classname="com.controller.ParkingControllerTest" time="0.025"/>
+  <testcase name="testParkingStatus()" classname="com.controller.ParkingControllerTest" time="0.002"/>
+  <testcase name="testParkVehicle()" classname="com.controller.ParkingControllerTest" time="0.002"/>
+  <system-out><![CDATA[]]></system-out>
+  <system-err><![CDATA[]]></system-err>
+</testsuite>
