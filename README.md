@@ -61,7 +61,7 @@ Toll Parking Engine is Java API for dealing with vehicle parking. It provide api
     • To get live status of parking slots:
         ◦ Url:http://localhost:9090/parking/status
         ◦ RequestMethod: GET
-
+### Note: EntryTime on Parking Ticket is set to 12:00 of the day for billing calculation demonstration purpose 
 
 
 ## Swagger Details
@@ -72,10 +72,13 @@ http://localhost:9090/swagger-ui.html
 toll-parking-engine/build/docs/javadoc/index.html
 
 ## Api Dependencies
+
+```
 Spring Boot			2+
-Gradle 			4.10+
+Gradle 				4.10+
 Springfox-swagger2		2.9.2
-springfox-swagger2-ui	2.9.2
+springfox-swagger2-ui		2.9.2
+```
 
 ## Sequence Diagrams
 
@@ -85,15 +88,17 @@ springfox-swagger2-ui	2.9.2
 
 
 ## Packages
-### Package                           Description
-com.parking.app 	                Main class package
+
+```
+Package                           Description
+com.parking.app 	          Main class package
 com.parking.config                Parking engine configurations and handlers
-com.parking.rest 	                Parking engine controller
+com.parking.rest 	          Parking engine controller
 com.parking.service               Parking service and validator
-com.pricing.models 	              Pricing policy interface and implementations
+com.pricing.models 	          Pricing policy interface and implementations
 com.slot.models                   Parking slot models
 com.vehicle.models                Vehicle classes and enums
-
+```
 
 
 ## Hierarchy
