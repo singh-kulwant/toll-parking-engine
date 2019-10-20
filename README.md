@@ -28,6 +28,7 @@ Toll Parking Engine is Java API for dealing with vehicle parking. It provide api
     • To park vehicle
         ◦ Url: http://localhost:9090/parking/vehicle/
         ◦ RequestMethod: POST
+	
         ◦ Sample RequestBody for standard gasoline vehicle: 
 
 ```json
@@ -37,14 +38,14 @@ Toll Parking Engine is Java API for dealing with vehicle parking. It provide api
 }
 ```
       
-        ◦ ### Sample RequestBody for 50KW electric vehicle:
+        ◦ Sample RequestBody for 50KW electric vehicle:
 ```json
 {
 	"vehicleRegistration":"CY345OD0",
 	"vehicleType" : "HEAVY_ELECTRIC"
 }
 ```      
-        ◦ ### Sample RequestBody for 20KW electric vehicle: 
+        ◦ Sample RequestBody for 20KW electric vehicle: 
 ```json
 {
 	"vehicleRegistration":"YT3828UR",
