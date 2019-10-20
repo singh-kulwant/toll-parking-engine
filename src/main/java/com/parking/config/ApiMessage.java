@@ -9,7 +9,7 @@ import com.fasterxml.jackson.annotation.JsonFormat;
 import lombok.Data;
 
 @Data
-class ApiError {
+public class ApiMessage {
 
 	private String message;
 
@@ -20,17 +20,17 @@ class ApiError {
 	@JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "dd-MM-yyyy hh:mm:ss")
 	private LocalDateTime timestamp;
 
-	ApiError() {
+	ApiMessage() {
 		timestamp = LocalDateTime.now();
 	}
 
-	ApiError(HttpStatus status, String message) {
+	public ApiMessage(HttpStatus status, String message) {
 		this();
 		this.status = status;
 		this.message = message;
 	}
 
-	ApiError(HttpStatus status, String message, Throwable ex) {
+	ApiMessage(HttpStatus status, String message, Throwable ex) {
 		this();
 		this.status = status;
 		this.message = message;

@@ -18,7 +18,7 @@ public class ApiExceptionHandler extends ResponseEntityExceptionHandler {
 	protected ResponseEntity<Object> handleHttpMessageNotReadable(HttpMessageNotReadableException ex,
 			HttpHeaders headers, HttpStatus status, WebRequest request) {
 		String error = "Malformed JSON input request";
-		return buildResponseEntity(new ApiError(HttpStatus.BAD_REQUEST, error, ex));
+		return buildResponseEntity(new ApiMessage(HttpStatus.BAD_REQUEST, error, ex));
 	}
 
 	/**
@@ -27,7 +27,7 @@ public class ApiExceptionHandler extends ResponseEntityExceptionHandler {
 	 * @param apiError
 	 * @return
 	 */
-	public ResponseEntity<Object> buildResponseEntity(ApiError apiError) {
+	public ResponseEntity<Object> buildResponseEntity(ApiMessage apiError) {
 		return new ResponseEntity<>(apiError, apiError.getStatus());
 	}
 
@@ -39,6 +39,6 @@ public class ApiExceptionHandler extends ResponseEntityExceptionHandler {
 	 * @return
 	 */
 	public ResponseEntity<Object> buildErrorResponseEntity(HttpStatus status, String message) {
-		return buildResponseEntity(new ApiError(status, message));
+		return buildResponseEntity(new ApiMessage(status, message));
 	}
 }

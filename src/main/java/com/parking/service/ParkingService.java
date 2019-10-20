@@ -2,6 +2,7 @@ package com.parking.service;
 
 import java.util.HashMap;
 import java.util.Optional;
+import java.util.function.Predicate;
 
 import org.springframework.stereotype.Service;
 
@@ -37,24 +38,22 @@ public class ParkingService {
 
 	}
 
-	public ParkingTicket unparkVehicle(String licence) {
+	public ParkingTicket unparkVehicle(String vehicleRegistration) {
 
 		Optional<Vehicle> vehicle = Optional.empty();
+		Predicate<Vehicle> vehiclePredicate = v -> vehicleRegistration.equalsIgnoreCase(v.getVehicleRegistration());
 
-		vehicle = StandardSlot.getInstance().parkedVehicles().keySet().stream()
-				.filter(v -> licence.equalsIgnoreCase(v.getVehicleRegistration())).findAny();
+		vehicle = StandardSlot.getInstance().parkedVehicles().keySet().stream().filter(vehiclePredicate).findAny();
 
 		if (vehicle.isPresent())
 			return StandardSlot.getInstance().unparkVehicle(vehicle.get());
 
-		vehicle = LightElectricSlot.getInstance().parkedVehicles().keySet().stream()
-				.filter(v -> licence.equalsIgnoreCase(v.getVehicleRegistration())).findAny();
+		vehicle = LightElectricSlot.getInstance().parkedVehicles().keySet().stream().filter(vehiclePredicate).findAny();
 
 		if (vehicle.isPresent())
 			return LightElectricSlot.getInstance().unparkVehicle(vehicle.get());
 
-		vehicle = HeavyElectricSlot.getInstance().parkedVehicles().keySet().stream()
-				.filter(v -> licence.equalsIgnoreCase(v.getVehicleRegistration())).findAny();
+		vehicle = HeavyElectricSlot.getInstance().parkedVehicles().keySet().stream().filter(vehiclePredicate).findAny();
 
 		if (vehicle.isPresent())
 			return HeavyElectricSlot.getInstance().unparkVehicle(vehicle.get());

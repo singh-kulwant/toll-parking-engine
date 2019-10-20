@@ -21,7 +21,7 @@ public abstract class ParkingSlot {
 	public String parkVehicle(Vehicle vehicle) {
 
 		if (freeSlots != 0 && vehicle.getVehicleType().equals(this.vehicleType)) {
-			vehicle.setTicket();
+			vehicle.setParkingTicket();
 			parkedVehicles.put(vehicle, freeSlots);
 			freeSlots--;
 			occupiedSlots++;

@@ -19,7 +19,7 @@ public class Vehicle {
 
 	private ParkingTicket parkingTicket;
 
-	public void setTicket() {
+	public void setParkingTicket() {
 		this.parkingTicket = new ParkingTicket(this.vehicleRegistration);
 	}
 

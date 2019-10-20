@@ -28,14 +28,13 @@ public class ParkingValidator {
 			return false;
 	}
 
-	public Boolean checkIfAlreadyPresent(Vehicle vehicle) {
+	public boolean checkIfAlreadyParked(String vehicleRegistration) {
 
-		Predicate<Vehicle> licenceMatch = v -> vehicle.getVehicleRegistration()
-				.equalsIgnoreCase(v.getVehicleRegistration());
+		Predicate<Vehicle> registrationMatch = v -> vehicleRegistration.equalsIgnoreCase(v.getVehicleRegistration());
 
-		if (StandardSlot.getInstance().parkedVehicles().keySet().stream().anyMatch(licenceMatch)
-				|| LightElectricSlot.getInstance().parkedVehicles().keySet().stream().anyMatch(licenceMatch)
-				|| HeavyElectricSlot.getInstance().parkedVehicles().keySet().stream().anyMatch(licenceMatch)) {
+		if (StandardSlot.getInstance().parkedVehicles().keySet().stream().anyMatch(registrationMatch)
+				|| LightElectricSlot.getInstance().parkedVehicles().keySet().stream().anyMatch(registrationMatch)
+				|| HeavyElectricSlot.getInstance().parkedVehicles().keySet().stream().anyMatch(registrationMatch)) {
 
 			return true;
 		} else {

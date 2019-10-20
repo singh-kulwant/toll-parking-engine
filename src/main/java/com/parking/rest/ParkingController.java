@@ -15,6 +15,7 @@ import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.parking.config.ApiExceptionHandler;
+import com.parking.config.ApiMessage;
 import com.parking.service.ParkingService;
 import com.parking.service.ParkingValidator;
 import com.pricing.models.ParkingTicket;
@@ -32,11 +33,17 @@ import com.vehicle.models.Vehicle;
 @RequestMapping("/parking")
 public class ParkingController {
 
+	private static final String NOT_FOUND = " not found due to technical error";
+
+	private static final String NOT_PARKED = " not parked in any parking slot";
+
 	private static final String BAD_REQUEST = "Bad request with malformed syntax";
 
-	private static final String INTERNAL_ERROR = "Internal error occured due to Parking Slot instance";
+	private static final String INTERNAL_ERROR = "Internal server error occured in Parking Slot instances";
 
 	private static final String VEHICLE_ALREADY_PARKED = " vehicle already parked in parking slot, Malformed request";
+
+	private static final String INCORRECT_URI = "Incorrect uri(add vehicle registration in uri) or change request method to park vehicle";
 
 	@Autowired
 	private ParkingService parkingService;
@@ -61,7 +68,7 @@ public class ParkingController {
 		if (!parkingValidator.validate(vehicle))
 			return exceptionHandler.buildErrorResponseEntity(HttpStatus.BAD_REQUEST, BAD_REQUEST);
 
-		if (parkingValidator.checkIfAlreadyPresent(vehicle)) {
+		if (parkingValidator.checkIfAlreadyParked(vehicle.getVehicleRegistration())) {
 			return exceptionHandler.buildErrorResponseEntity(HttpStatus.BAD_REQUEST,
 					vehicle.getVehicleRegistration() + VEHICLE_ALREADY_PARKED);
 		} else {
@@ -71,7 +78,7 @@ public class ParkingController {
 			if (ObjectUtils.isEmpty(parkingSlot))
 				return exceptionHandler.buildErrorResponseEntity(HttpStatus.INTERNAL_SERVER_ERROR, INTERNAL_ERROR);
 
-			return new ResponseEntity<>(parkingSlot.parkVehicle(vehicle), HttpStatus.OK);
+			return new ResponseEntity<>(new ApiMessage(HttpStatus.OK, parkingSlot.parkVehicle(vehicle)), HttpStatus.OK);
 		}
 
 	}
@@ -85,8 +92,22 @@ public class ParkingController {
 	 */
 	@RequestMapping(value = "/vehicle/{vehicleRegistration}", method = RequestMethod.DELETE)
 	@ResponseBody
-	public ParkingTicket unparkVehicle(@PathVariable String vehicleRegistration) {
-		return parkingService.unparkVehicle(vehicleRegistration);
+	public ResponseEntity<Object> unparkVehicle(@PathVariable(required = true) String vehicleRegistration) {
+
+		if (parkingValidator.checkIfAlreadyParked(vehicleRegistration)) {
+			ParkingTicket response = parkingService.unparkVehicle(vehicleRegistration);
+
+			if (ObjectUtils.isNotEmpty(response)) {
+				return new ResponseEntity<>(response, HttpStatus.OK);
+			} else {
+				return new ResponseEntity<>(new ApiMessage(HttpStatus.NOT_FOUND, vehicleRegistration + NOT_FOUND),
+						HttpStatus.NOT_FOUND);
+			}
+
+		} else {
+			return new ResponseEntity<>(new ApiMessage(HttpStatus.BAD_REQUEST, vehicleRegistration + NOT_PARKED),
+					HttpStatus.BAD_REQUEST);
+		}
 	}
 
 	/**
@@ -98,8 +119,24 @@ public class ParkingController {
 	 */
 	@RequestMapping(value = "/status", method = RequestMethod.GET)
 	@ResponseBody
-	public HashMap<String, HashMap<String, Integer>> parkingStatus() {
-		return parkingService.parkingStatus();
+	public ResponseEntity<Object> parkingStatus() {
+
+		HashMap<String, HashMap<String, Integer>> response = parkingService.parkingStatus();
+
+		if (ObjectUtils.isNotEmpty(response)) {
+			return new ResponseEntity<>(response, HttpStatus.OK);
+		} else {
+			return new ResponseEntity<>(new ApiMessage(HttpStatus.INTERNAL_SERVER_ERROR, INTERNAL_ERROR),
+					HttpStatus.INTERNAL_SERVER_ERROR);
+		}
+
+	}
+
+	@RequestMapping(value = "/vehicle/", method = RequestMethod.DELETE)
+	@ResponseBody
+	public ResponseEntity<Object> incorrectUriHandler() {
+
+		return new ResponseEntity<>(new ApiMessage(HttpStatus.BAD_REQUEST, INCORRECT_URI), HttpStatus.BAD_REQUEST);
 	}
 
 }
