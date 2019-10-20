@@ -5,10 +5,10 @@ Toll Parking Engine is Java API for dealing with vehicle parking. It provide api
 
 ## API Details
 ```
-Resource                                  	Request Method          Function
-/parking/vehicle/                             	POST                    Park vehicle in right slot
-/parking/vehicle/{vehicleRegistration}        	DELETE                  Unpark vehicle from slot and generate bill
-/parking/status                               	GET                     Fetch current status of all praking slots
+Resource                                  Request Method	Function
+/parking/vehicle/                         POST                  Park vehicle in right slot
+/parking/vehicle/{vehicleRegistration}    DELETE                Unpark vehicle from slot and generate bill
+/parking/status                           GET                   Fetch current status of all praking slots
 ```
 
 ## Installation and Use
