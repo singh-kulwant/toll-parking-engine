@@ -2,9 +2,9 @@ server:
   port: 9090
 
 parking:
-  standardCapacity: 2
-  heavyElectricCapacity: 2
-  lightElectricCapacity: 2
-  hourlyBillingRate: 15
-  fixedHourlyBillingRate: 10
-  fixedHourlyFixedCharge: 20
+  standardCapacity: 4
+  heavyElectricCapacity: 3
+  lightElectricCapacity: 3
+  hourlyBillingRate: 5
+  fixedHourlyBillingRate: 3
+  fixedHourlyFixedCharge: 10

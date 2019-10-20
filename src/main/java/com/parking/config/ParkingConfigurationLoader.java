@@ -25,22 +25,22 @@ import com.slot.models.StandardSlot;
 @ConfigurationProperties(prefix = "parking")
 public class ParkingConfigurationLoader {
 
-	@Value(value = "${standardCapacity}")
+	@Value(value = "${standardCapacity:3}")
 	public int standardCapacity;
 
-	@Value(value = "${lightElectricCapacity}")
+	@Value(value = "${lightElectricCapacity:1}")
 	public int lightElectricCapacity;
 
-	@Value(value = "${heavyElectricCapacity}")
+	@Value(value = "${heavyElectricCapacity:1}")
 	public int heavyElectricCapacity;
 
-	@Value(value = "${hourlyBillingRate}")
+	@Value(value = "${hourlyBillingRate:4}")
 	public Long hourlyBillingRate;
 
-	@Value(value = "${fixedHourlyBillingRate}")
+	@Value(value = "${fixedHourlyBillingRate:2}")
 	public Long fixedHourlyBillingRate;
 
-	@Value(value = "${fixedHourlyFixedCharge}")
+	@Value(value = "${fixedHourlyFixedCharge:5}")
 	public Long fixedHourlyFixedCharge;
 
 	@Bean
