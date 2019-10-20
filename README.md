@@ -57,6 +57,7 @@ Toll Parking Engine is Java API for dealing with vehicle parking. It provide api
         ◦ RequestMethod: DELETE
         ◦ Sample request uri
             ▪ http://localhost:9090/parking/vehicle/PO4534
+	    
     • To get live status of parking slots:
         ◦ Url:http://localhost:9090/parking/status
         ◦ RequestMethod: GET
@@ -77,6 +78,10 @@ Springfox-swagger2		2.9.2
 springfox-swagger2-ui	2.9.2
 
 ## Sequence Diagrams
+
+![alt text](https://github.com/singh-kulwant/toll-parking-engine/blob/master/Vehicle-Park-Sequence-Diagram.png)
+
+![alt text](https://github.com/singh-kulwant/toll-parking-engine/blob/master/Vehicle-Unpark-Sequence-Diagram.png)
 
 
 ## Packages
