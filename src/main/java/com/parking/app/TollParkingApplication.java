@@ -8,7 +8,6 @@ import org.springframework.context.annotation.ComponentScan;
 import com.parking.config.ParkingConfigurationLoader;
 
 @SpringBootApplication
-@EnableConfigurationProperties(ParkingConfigurationLoader.class)
 @ComponentScan({"com.parking.rest","com.parking.config","com.parking.service"})
 public class TollParkingApplication {
 
