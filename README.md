@@ -1,6 +1,6 @@
-# Toll Parking Engine 1.0.0
+# Parking Ticket Service 1.0.0
 
-Toll Parking Engine is Java API for dealing with vehicle parking. It provide apis to park vehicle, unpark vehicle and generate parking ticket. 
+Parking Ticket Service provides REST API for dealing with vehicle parking. It supports following operations park vehicle, unpark vehicle and generate parking ticket.
 
 
 ## API Details
@@ -15,15 +15,15 @@ Resource                                  Request Method	Function
 
 1. Clone project
 ```bash
-~/java-project$ git clone https://github.com/singh-kulwant/toll-parking-engine.git
+~/java-project$ git clone https://github.com/singh-kulwant/parking-ticket-service.git
 ```
 2. Build project
 ```bash
-~/java-project/toll-parking-engine$ sudo gradle clean build
+~/java-project/parking-ticket-service$ sudo gradle clean build
 ```
 3. Start application
 ```bash
-~/java-project/toll-parking-engine$ sudo gradle bootRun
+~/java-project/parking-ticket-service$ sudo gradle bootRun
 ```
 4. Open uri in any Rest Client
     • To park vehicle
@@ -84,9 +84,9 @@ springfox-swagger2-ui		2.9.2
 
 ## Sequence Diagrams
 
-![alt text](https://github.com/singh-kulwant/toll-parking-engine/blob/master/Vehicle-Park-Sequence-Diagram.png)
+![alt text](https://github.com/singh-kulwant/parking-ticket-service/blob/master/src/main/resources/Vehicle-Park-Sequence-Diagram.png)
 
-![alt text](https://github.com/singh-kulwant/toll-parking-engine/blob/master/Vehicle-Unpark-Sequence-Diagram.png)
+![alt text](https://github.com/singh-kulwant/parking-ticket-service/blob/master/src/main/resources/Vehicle-Unpark-Sequence-Diagram.png)
 
 
 ## Packages
