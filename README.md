@@ -107,26 +107,26 @@ com.vehicle.models                Vehicle classes and enums
 ### Class Hierarchy
     • java.lang.Object
         ◦ com.parking.config.ApiMessage
-        ◦ com.pricing.models.FixedHourlyBilling (implements com.pricing.models.PricingPolicy)
-        ◦ com.pricing.models.HourlyBilling (implements com.pricing.models.PricingPolicy)
+        ◦ com.kulsin.models.pricing.FixedHourlyBilling (implements com.kulsin.models.pricing.PricingPolicy)
+        ◦ com.kulsin.models.pricing.HourlyBilling (implements com.kulsin.models.pricing.PricingPolicy)
         ◦ com.parking.config.ParkingConfigurationLoader
         ◦ com.parking.rest.ParkingController
         ◦ com.parking.service.ParkingService
-        ◦ com.slot.models.ParkingSlot
-            ▪ com.slot.models.HeavyElectricSlot
-            ▪ com.slot.models.LightElectricSlot
-            ▪ com.slot.models.StandardSlot
-        ◦ com.pricing.models.ParkingTicket
+        ◦ com.kulsin.models.slot.ParkingSlot
+            ▪ com.kulsin.models.slot.HeavyElectricSlot
+            ▪ com.kulsin.models.slot.LightElectricSlot
+            ▪ com.kulsin.models.slot.StandardSlot
+        ◦ com.kulsin.models.pricing.ParkingTicket
         ◦ com.parking.service.ParkingValidator
         ◦ org.springframework.web.servlet.mvc.method.annotation.ResponseEntityExceptionHandler
             ▪ com.parking.config.ApiExceptionHandler
         ◦ com.parking.config.SwaggerConfiguration
-        ◦ com.parking.app.TollParkingApplication
-        ◦ com.vehicle.models.Vehicle
+        ◦ com.kulsin.TollParkingApplication
+        ◦ com.kulsin.models.vehicle.Vehicle
 
 ### Interface Hierarchy
-    • com.pricing.models.PricingPolicy
+    • com.kulsin.models.pricing.PricingPolicy
 ### Enum Hierarchy
     • java.lang.Object
         ◦ java.lang.Enum<E> (implements java.lang.Comparable<T>, java.io.Serializable)
-            ▪ com.vehicle.models.VehicleType
+            ▪ com.kulsin.models.vehicle.VehicleType
