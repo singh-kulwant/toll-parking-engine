@@ -30,4 +30,7 @@ build/
 hs_err_pid*
 .gradle
 .idea
+.vscode
+.iml
 gradle
+target

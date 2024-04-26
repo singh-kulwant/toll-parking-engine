@@ -1,10 +1,26 @@
 server:
   port: 9090
 
-parking:
-  standardCapacity: 4
-  heavyElectricCapacity: 3
-  lightElectricCapacity: 3
-  hourlyBillingRate: 5
-  fixedHourlyBillingRate: 3
-  fixedHourlyFixedCharge: 10
+spring:
+  datasource:
+    url: jdbc:h2:mem:mydb
+    username: sa
+    password: password
+    driverClassName: org.h2.Driver
+  jpa:
+    database-platform: org.hibernate.dialect.H2Dialect
+
+com.kulsin:
+  parking-lot:
+    standard:
+      capacity: 10
+      fixed-charge: 5
+      hourly-billing-rate: 2
+    light-electric:
+      capacity: 5
+      fixed-charge: 10
+      hourly-billing-rate: 3
+    heavy-electric:
+      capacity: 5
+      fixed-charge: 15
+      hourly-billing-rate: 5
