@@ -8,7 +8,7 @@ import com.kulsin.models.response.ParkingStatus;
 
 import java.util.List;
 
-public interface ParkingService {
+public interface ParkingOperationsService {
     
     /**
      * Parks a vehicle in a specified slot.
@@ -55,6 +55,6 @@ public interface ParkingService {
      * @param slotNumber
      * @return
      */
-    ParkingStatus getParkingSlotDetails(int slotNumber);
+    ParkingStatus getParkingSlotDetails(String slotNumber);
 
 }

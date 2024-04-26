@@ -1,4 +1,4 @@
-package com.kulsin.entity;
+package com.kulsin.dto;
 
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;

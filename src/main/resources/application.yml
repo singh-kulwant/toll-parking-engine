@@ -13,14 +13,14 @@ spring:
 com.kulsin:
   parking-lot:
     standard:
-      capacity: 4
+      capacity: 10
+      fixed-charge: 5
+      hourly-billing-rate: 2
+    light-electric:
+      capacity: 5
       fixed-charge: 10
       hourly-billing-rate: 3
     heavy-electric:
-      capacity: 4
-      fixed-charge: 10
-      hourly-billing-rate: 3
-    light-electric:
-      capacity: 4
-      fixed-charge: 10
-      hourly-billing-rate: 3
+      capacity: 5
+      fixed-charge: 15
+      hourly-billing-rate: 5
