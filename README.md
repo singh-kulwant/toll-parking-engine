@@ -1,5 +1,9 @@
-Park Vehicle:
+# Parking Lot Service
 
+This service provides APIs for parking and unparking vehicles in a parking lot, along with other functionalities such as generating bills, checking parking status, and searching for vehicles.
+
+
+**Park Vehicle:**
 ```bash
 curl -X POST \
 -H "Content-Type: application/json" \
@@ -7,8 +11,8 @@ curl -X POST \
 http://localhost:9090/api/park
 ```
 
-Unpark Vehicle:
 
+**Unpark Vehicle:**
 ```bash
 curl -X POST \
      -H "Content-Type: application/json" \
@@ -16,27 +20,27 @@ curl -X POST \
      http://localhost:9090/api/unpark
 ```
 
-Generate Bill:
 
+**Generate Bill:**
 ```bash
 curl -X POST \
      http://localhost:9090/api/generate-bill?plate-number=ABC123
 ```
 
-Fetch Current Parking Status:
 
+**Fetch Current Parking Status:**
 ```bash
 curl http://localhost:9090/api/parking-status
 ```
 
-Search Vehicle by Plate Number:
 
+**Search Vehicle by Plate Number:**
 ```bash
 curl http://localhost:9090/api/search-vehicle?plate-number=ABC123
 ```
 
-Get Parking Slot Details::
 
+**Get Parking Slot Details:**
 ```bash
 curl http://localhost:9090/api/parking-slot/GASOLINE_slot_1
 ```
