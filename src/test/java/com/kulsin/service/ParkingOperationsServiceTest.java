@@ -34,7 +34,6 @@ class ParkingOperationsServiceTest {
 
     @BeforeEach
     public void setUp() {
-
         GenericConversionService conversionService = new GenericConversionService();
         conversionService.addConverter(new ParkingToParkingStatusConverter());
         conversionService.addConverter(new ParkRequestToParkingConverter());
@@ -87,6 +86,7 @@ class ParkingOperationsServiceTest {
         Parking parking = mockParking("ABC123");
 
         // Mock repository method
+
         when(repository.findParkingByVehicleRegistration("ABC123")).thenReturn(parking);
 
         // Mock administration service
