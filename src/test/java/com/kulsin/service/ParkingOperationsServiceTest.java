@@ -10,7 +10,6 @@ import com.kulsin.models.response.GenerateBillResponse;
 import com.kulsin.models.response.ParkUnparkResponse;
 import com.kulsin.models.response.ParkingStatus;
 import com.kulsin.repository.ParkedVehicleRepository;
-import jakarta.persistence.Column;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.springframework.core.convert.support.GenericConversionService;
@@ -18,7 +17,6 @@ import org.springframework.core.convert.support.GenericConversionService;
 import java.time.Instant;
 import java.util.Date;
 import java.util.List;
-import java.util.Optional;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertNotNull;
@@ -30,7 +28,6 @@ import static org.mockito.Mockito.when;
 
 class ParkingOperationsServiceTest {
 
-    private GenericConversionService conversionService;
     private ParkedVehicleRepository repository;
     private ParkingAdministrationService administrationService;
     private ParkingOperationsService parkingOperationsService;
@@ -38,7 +35,7 @@ class ParkingOperationsServiceTest {
     @BeforeEach
     public void setUp() {
 
-        conversionService = new GenericConversionService();
+        GenericConversionService conversionService = new GenericConversionService();
         conversionService.addConverter(new ParkingToParkingStatusConverter());
         conversionService.addConverter(new ParkRequestToParkingConverter());
 
@@ -71,6 +68,8 @@ class ParkingOperationsServiceTest {
         UnparkRequest unparkRequest = new UnparkRequest();
         unparkRequest.setPlateNumber("ABC123");
 
+        when(repository.deleteByVehicleRegistration("ABC123")).thenReturn(1L);
+
         // Perform unpark operation
         ParkUnparkResponse response = parkingOperationsService.unparkVehicle(unparkRequest);
 
@@ -88,7 +87,7 @@ class ParkingOperationsServiceTest {
         Parking parking = mockParking("ABC123");
 
         // Mock repository method
-        when(repository.findParkingByVehicleRegistration("ABC123")).thenReturn(Optional.of(parking));
+        when(repository.findParkingByVehicleRegistration("ABC123")).thenReturn(parking);
 
         // Mock administration service
         when(administrationService.calculateBill(parking)).thenReturn(100L);
@@ -121,10 +120,10 @@ class ParkingOperationsServiceTest {
     @Test
     public void testSearchVehicleByRegistration() {
         // Mock parking object
-        Parking parking =  mockParking("ABC123");
+        Parking parking = mockParking("ABC123");
 
         // Mock repository method
-        when(repository.findParkingByVehicleRegistration("ABC123")).thenReturn(Optional.of(parking));
+        when(repository.findParkingByVehicleRegistration("ABC123")).thenReturn(parking);
 
         // Perform searchVehicleByRegistration operation
         ParkingStatus status = parkingOperationsService.searchVehicleByRegistration("ABC123");
@@ -137,10 +136,10 @@ class ParkingOperationsServiceTest {
     @Test
     public void testGetParkingSlotDetails() {
         // Mock parking object
-        Parking parking =  mockParking("ABC123");
+        Parking parking = mockParking("ABC123");
 
         // Mock repository method
-        when(repository.findBySlotNumber("GASOLINE_slot_1")).thenReturn(Optional.of(parking));
+        when(repository.findBySlotNumber("GASOLINE_slot_1")).thenReturn(parking);
 
         // Perform getParkingSlotDetails operation
         ParkingStatus status = parkingOperationsService.getParkingSlotDetails("GASOLINE_slot_1");
