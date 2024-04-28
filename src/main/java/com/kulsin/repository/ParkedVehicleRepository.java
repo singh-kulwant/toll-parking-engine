@@ -9,11 +9,11 @@ import java.util.Optional;
 @Repository
 public interface ParkedVehicleRepository extends JpaRepository<Parking, Long> {
 
-    void deleteByVehicleRegistration(String vehicleRegistration);
+    long deleteByVehicleRegistration(String vehicleRegistration);
 
-    Optional<Parking> findParkingByVehicleRegistration(String vehicleRegistration);
+    Parking findParkingByVehicleRegistration(String vehicleRegistration);
 
-    Optional<Parking> findBySlotNumber(String slotNumber);
+    Parking findBySlotNumber(String slotNumber);
 
     int countByVehicleType(String vehicleType);
 

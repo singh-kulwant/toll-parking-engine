@@ -66,6 +66,18 @@ class ParkingControllerTest {
     @Test
     public void testUnparkEndpoint() {
         webTestClient.post()
+                .uri("/api/park")
+                .contentType(APPLICATION_JSON)
+                .bodyValue("""
+                        {
+                        "plateNumber": "ABC123",
+                        "vehicleType": "gasoline",
+                        "color": "red",
+                        "brand": "Toyota"
+                        }""")
+                .exchange();
+
+        webTestClient.post()
                 .uri("/api/unpark")
                 .contentType(APPLICATION_JSON)
                 .bodyValue("""
@@ -77,6 +89,22 @@ class ParkingControllerTest {
                 .expectBody()
                 .jsonPath("$.success").isEqualTo(true)
                 .jsonPath("$.message").isEqualTo("Unparked successfully");
+    }
+
+    @Test
+    public void testUnparkEndpoint_failure() {
+        webTestClient.post()
+                .uri("/api/unpark")
+                .contentType(APPLICATION_JSON)
+                .bodyValue("""
+                        {
+                        "plateNumber":"ABC123"
+                        }""")
+                .exchange()
+                .expectStatus().is5xxServerError()
+                .expectBody()
+                .jsonPath("$.success").isEqualTo(false)
+                .jsonPath("$.message").isEqualTo("EntityNotFoundException - Vehicle ABC123 not found!");
     }
 
     @Test

@@ -8,6 +8,9 @@ import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
 import java.sql.Timestamp;
+import java.time.Instant;
+import java.time.temporal.ChronoUnit;
+import java.util.Date;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.mockito.ArgumentMatchers.any;
@@ -31,7 +34,7 @@ class ParkingAdministrationServiceTest {
     public void testCalculateBill() {
         // Mock Parking object
         Parking parking = new Parking();
-        parking.setEntryTime(Timestamp.valueOf("2024-04-27 10:00:00"));
+        parking.setEntryTime(Date.from(Instant.now().minus(1, ChronoUnit.DAYS)));
         parking.setVehicleType("GASOLINE");
 
         // Mock configuration values
@@ -42,7 +45,7 @@ class ParkingAdministrationServiceTest {
         Long bill = parkingService.calculateBill(parking);
 
         // Verify the result
-        assertEquals(280L, bill);
+        assertEquals(290L, bill);
     }
 
     @Test

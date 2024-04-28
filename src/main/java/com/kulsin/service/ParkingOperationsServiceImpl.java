@@ -8,13 +8,13 @@ import com.kulsin.models.response.GenerateBillResponse;
 import com.kulsin.models.response.ParkUnparkResponse;
 import com.kulsin.models.response.ParkingStatus;
 import com.kulsin.repository.ParkedVehicleRepository;
+import jakarta.persistence.EntityNotFoundException;
 import jakarta.transaction.Transactional;
 import lombok.AllArgsConstructor;
 import org.springframework.core.convert.ConversionService;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
-import java.util.Optional;
 
 @Service
 @AllArgsConstructor
@@ -39,20 +39,23 @@ public class ParkingOperationsServiceImpl implements ParkingOperationsService {
     @Override
     @Transactional
     public ParkUnparkResponse unparkVehicle(UnparkRequest unparkRequest) {
-        repository.deleteByVehicleRegistration(unparkRequest.getPlateNumber());
+        long numOfEntriesDeleted = repository.deleteByVehicleRegistration(unparkRequest.getPlateNumber());
+        if (numOfEntriesDeleted == 0) {
+            throw new EntityNotFoundException(String.format("Vehicle %s not found!", unparkRequest.getPlateNumber()));
+        }
         return ParkUnparkResponse.builder().success(true).message("Unparked successfully").build();
     }
 
     @Override
     public GenerateBillResponse generateBill(String vehicleRegistration) {
-        Optional<Parking> optionalParking = repository.findParkingByVehicleRegistration(vehicleRegistration);
+        Parking parking = repository.findParkingByVehicleRegistration(vehicleRegistration);
 
-        if (optionalParking.isEmpty()) {
-            throw new RuntimeException("Data not found!");
+        if (parking == null) {
+            throw new EntityNotFoundException(String.format("Vehicle %s not found!", vehicleRegistration));
         }
 
         return GenerateBillResponse.builder()
-                .billAmount(administrationService.calculateBill(optionalParking.get()))
+                .billAmount(administrationService.calculateBill(parking))
                 .build();
     }
 
@@ -65,24 +68,20 @@ public class ParkingOperationsServiceImpl implements ParkingOperationsService {
 
     @Override
     public ParkingStatus searchVehicleByRegistration(String vehicleRegistration) {
-        Optional<Parking> optionalParking = repository.findParkingByVehicleRegistration(vehicleRegistration);
-
-        if (optionalParking.isEmpty()) {
-            throw new RuntimeException("Data not found!");
+        Parking parking = repository.findParkingByVehicleRegistration(vehicleRegistration);
+        if (parking == null) {
+            throw new EntityNotFoundException(String.format("Vehicle %s not found!", vehicleRegistration));
         }
-
-        return conversionService.convert(optionalParking.get(), ParkingStatus.class);
+        return conversionService.convert(parking, ParkingStatus.class);
     }
 
     @Override
     public ParkingStatus getParkingSlotDetails(String slotNumber) {
-        Optional<Parking> optionalParking = repository.findBySlotNumber(slotNumber);
-
-        if (optionalParking.isEmpty()) {
-            throw new RuntimeException("Data not found!");
+        Parking parking = repository.findBySlotNumber(slotNumber);
+        if (parking == null) {
+            throw new EntityNotFoundException(String.format("Parking slot %s not found!", slotNumber));
         }
-
-        return conversionService.convert(optionalParking.get(), ParkingStatus.class);
+        return conversionService.convert(parking, ParkingStatus.class);
     }
 
 }
